@@ -1,14 +1,25 @@
-import React,{useState}from "react";
+import React,{useState,useEffect}from "react";
+import { getForm } from "../services/formService";
 import Fields from "../components/Fields";
 import Builder from "../components/Builder";
+import { useParams } from "react-router-dom";
 const FormBuilder = () => {
   const [form, setForm] = useState({ name: "", fields: [] });
   const [formId, setFormId] = useState(null);
-
+  const {id}=useParams();
+  useEffect(() => {
+     const getSpecificForm=async()=>{
+          console.log(id)
+          const response=await getForm(id);
+          setForm(prev=>{return {...prev,fields:response.data.fields}})
+     }
+     getSpecificForm();
+    
+  }, [])
+  
   const handleDrop = (item) => {
-    const newField = { id: Date.now(), type: item.label };
     setForm((prev) => {
-      return { ...prev, fields: [...prev.fields, newField] };
+      return { ...prev, fields: [...prev.fields, item.label] };
     });
   };
 

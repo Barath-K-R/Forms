@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Route,Routes, useFetcher } from 'react-router-dom';
+import { BrowserRouter, Route,Routes } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import axios from 'axios';
@@ -8,13 +8,25 @@ import Home from './pages/Home';
 import SideMenu from './components/SideMenu';
 import FormBuilder from './pages/FormBuilder';
 import Auth from './pages/Auth';
+import { useUser } from "./context/UserContext";
 function App() {
-  const [user, setUser] = useState(null);
+  const {user,setUser}=useUser()
   useEffect(()=>{
-       const getUser=async()=>{
-        console.log('getting user')
-            const res=await axios.get('http://localhost:5000/api/auth/login/success');
-       }
+    const getUser = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/auth/login/success", {
+          withCredentials: true,
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true,
+          },
+        });
+        setUser(response.data.user)
+      } catch (error) {
+        console.error("authentication has been failed");
+      }
+    };
        getUser();
   },[])
   return (
@@ -25,8 +37,9 @@ function App() {
         <SideMenu />
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Auth />}/>
-            <Route path='/builder' element={<FormBuilder />}/>
+            <Route path='/' element={user?<Home/>:<Auth/>}/>
+            <Route path='/auth' element={<Auth />}/>
+            <Route path='/formbuilder/:id' element={user?<FormBuilder />:<Auth/>}/>
           </Routes>
         </BrowserRouter>
       </div>

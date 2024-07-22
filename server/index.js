@@ -16,23 +16,19 @@ const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: "GET,POST,PUT,DELETE",
+  credentials: true,
+}));
 
 // Session configuration
-app.use(
-  session({
-    secret: 'secret-key', 
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false }, 
-  })
-);
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } 
+}));
 
 // Passport
 app.use(passport.initialize());

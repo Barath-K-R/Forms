@@ -12,8 +12,8 @@ const Navbar = () => {
       </section>
 
       <div className="flex items-center gap-4 pr-4">
-        <img src={user?.profileimage} alt="" className="h-9 w-9 rounded-3xl" />
-        <p>{user?.username}</p>
+        <img src={user?.profileimage} alt="" className="h-9 w-9 rounded-3xl cursor-pointer" />
+        <p className="font-semibold">{user?.username}</p>
       </div>
     </div>
   );

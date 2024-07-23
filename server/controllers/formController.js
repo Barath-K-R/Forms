@@ -13,18 +13,33 @@ export const getUserForms=async(req,res)=>{
         console.log(error)
     }
 }
-export const addForm=async(req,res)=>{
-    console.log(req.params.id)
-    const {name,fields}=req.body
+
+export const newForm = async (req, res) => {
+    const { id } = req.body; 
     try {
-        const form={
-            name:name,
-            fields:fields,
-            userId:req.params.id
-        };
-        const newForm=new formModel(form);
+        const newForm = new formModel({
+            userId: id, 
+        });
+        console.log(newForm);
         await newForm.save();
-        res.status(200).json({message:"form saved successfully"})
+        res.status(200).json({
+            message: "Form is created",
+            newForm: newForm
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ error: error.message });
+    }
+};
+export const updateForm=async(req,res)=>{
+    console.log('updating form');
+    const form=req.body;
+    const formId=req.params.formId;
+    console.log(form)
+    console.log(formId)
+    try {
+       const updatedForm=await formModel.findByIdAndUpdate(formId,form,{new:true});
+       res.status(200).json({message:"form updated successfully",updatedForm:updatedForm});
     } catch (error) {
         console.log(error);
     }

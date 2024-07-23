@@ -2,11 +2,22 @@ import axios from 'axios';
 const api=axios.create({
     baseUrl:"http://localhost:5000/api"
 })
-
-export const addForm=async(form,user)=>{
+export const newForm=async(id)=>{
+  console.log('creating new form')
+  try {
+    const response=await axios.post('http://localhost:5000/api/forms/new',{id});
+    console.log(response.data.newForm)
+    return response.data.newForm;
+  } catch (error) {
+    
+  }
+}
+export const updateForm=async(form)=>{
+  console.log("updating form")
       try {
-        const formResponse=await axios.post(`http://localhost:5000/api/forms/addform/${user._id}`,form);
-        console.log(formResponse)
+        const formResponse=await axios.put(`http://localhost:5000/api/forms/${form._id}`,form);
+        console.log(formResponse.data)
+        return formResponse;
       } catch (error) {
         console.log(error)
       }

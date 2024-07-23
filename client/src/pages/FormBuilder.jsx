@@ -9,9 +9,9 @@ const FormBuilder = () => {
   const {id}=useParams();
   useEffect(() => {
      const getSpecificForm=async()=>{
-          console.log(id)
+
           const response=await getForm(id);
-          setForm(prev=>{return {...prev,fields:response.data.fields}})
+          setForm(response.data);
      }
      getSpecificForm();
     

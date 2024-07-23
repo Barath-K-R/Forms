@@ -1,18 +1,20 @@
 import mongoose from 'mongoose';
 
-const formSchema=mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+const formSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        default: null,
     },
-    userId:{
-        type:String,
-        required:true
+    userId: {
+        type: String,
+        required: true,
     },
-    fields:[String]
-    
-})
+    fields: {
+        type: [String],
+        default: [],
+    },
+}, { timestamps: true });
 
-const formModel=mongoose.model('forms',formSchema);
+const formModel = mongoose.model('Form', formSchema);
 
 export default formModel;

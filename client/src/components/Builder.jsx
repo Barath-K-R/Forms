@@ -5,7 +5,7 @@ import AddressInput from "./AddressInput";
 import DateInput from "./DateInput";
 import PhoneNumberInput from "./PhoneNumberInput";
 import { useUser } from "../context/UserContext";
-import { addForm } from "../services/formService";
+import { updateForm } from "../services/formService";
 
 const Builder = ({ form, setForm, onDrop }) => {
   const { user } = useUser();
@@ -35,12 +35,13 @@ const Builder = ({ form, setForm, onDrop }) => {
         break;
     }
   };
-  const handleBuild=()=>{
-    if (user) {
-      addForm(form, user);
-    } else {
-      console.error('User is not authenticated');
+  const handleBuild=async()=>{
+    try {
+      const updatedForm=updateForm(form);
+    } catch (error) {
+      console.log(error);
     }
+  
   }
   return (
     <div className="flex flex-col items-center w-full bg-white">

@@ -1,5 +1,5 @@
 import formModel from "../models/formModel.js";
-
+import {formDataModel} from '../models/formDataModel.js'
 export const getUserForms=async(req,res)=>{
     const id=req.params.userId;
     console.log('fetching '+id+" s forms")
@@ -50,6 +50,19 @@ export const getForm=async(req,res)=>{
     try {
         const form=await formModel.findOne(id);
         res.status(200).send(form)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const uploadFormData=async(req,res)=>{
+    console.log('uploading form data')
+    const formdata=req.body;
+    try {
+        const newFormData=new formDataModel(formdata);
+        await newFormData.save();
+
+        res.status(200).json({message:"formdata saved"});
     } catch (error) {
         console.log(error);
     }

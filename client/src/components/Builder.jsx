@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDrop } from "react-dnd";
+import { useNavigate } from "react-router-dom";
 import NameInput from "./NameInput";
 import AddressInput from "./AddressInput";
 import DateInput from "./DateInput";
@@ -9,6 +10,7 @@ import { updateForm } from "../services/formService";
 
 const Builder = ({ form, setForm, onDrop }) => {
   const { user } = useUser();
+  const navigate=useNavigate();
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "FIELD",
     drop: (item) => onDrop(item),
@@ -43,25 +45,23 @@ const Builder = ({ form, setForm, onDrop }) => {
     }
   
   }
+
+  
   return (
-    <div className="flex flex-col items-center w-full bg-white">
-      <div className="text-center">
-        <label htmlFor="formname">Form Name</label>
-        <input
-          type="text"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
+    <div className="flex flex-col items-center w-full bg-gray-100">
+      <div className="flex w-8/12 h-14 mt-6 text-2xl justify-center items-center shadow-2xl border border-gray-200 bg-white">
+         {form.name}
       </div>
       <div
         ref={drop}
         className={`flex flex-col gap-8 w-8/12 min-h-52 p-4 pl-12 ${
           isOver ? "bg-blue-300" : "bg-white"
-        } border-2 border-solid border-black`}
+        } shadow-2xl`}
       >
         {form.fields.map(renderFields)}
       </div>
-      <button className="h-8 w-16  border bg-green-400 rounded-lg" onClick={handleBuild}>Build</button>
+      <button className="h-8 w-16  border mt-4  bg-green-400 rounded-lg" onClick={handleBuild}>Build</button>
+      <button className="h-8 w-28  border mt-4  bg-green-400 rounded-lg" onClick={()=>navigate(`/formdisplay/${form._id}`)}>Access Form</button>
     </div>
   );
 };

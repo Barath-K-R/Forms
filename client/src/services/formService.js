@@ -40,3 +40,11 @@ export const getForm=async(id)=>{
       
      }
 }
+
+export const addFormData=async(formData)=>{
+  try {
+    const response=await axios.post('http://localhost:5000/api/forms/formdata',formData)
+  } catch (error) {
+    
+  }
+}

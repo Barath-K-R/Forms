@@ -31,7 +31,7 @@ const Home = () => {
     <div className='w-screen bg-gray-100'>
         <div className="flex justify-between items-center w-full p-2 pl-6 pr-8 bg-white">
           <h2>My Forms</h2>
-          <button className='h-9 w-20 rounded bg-green-500' onClick={handleNewForm}>New Form</button>
+          <button className='h-10 w-24 rounded hover:bg-green-600 bg-green-500' onClick={handleNewForm}>New Form</button>
         </div>
         <div className="flex flex-col items-center w-full mt-6 ">
            {forms?.map(form=>{

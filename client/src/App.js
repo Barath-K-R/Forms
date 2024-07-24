@@ -9,6 +9,7 @@ import SideMenu from './components/SideMenu';
 import FormBuilder from './pages/FormBuilder';
 import Auth from './pages/Auth';
 import { useUser } from "./context/UserContext";
+import FormDisplay from "./pages/FormDisplay";
 function App() {
   const {user,setUser}=useUser()
   useEffect(()=>{
@@ -40,6 +41,7 @@ function App() {
             <Route path='/' element={user?<Home/>:<Auth/>}/>
             <Route path='/auth' element={<Auth />}/>
             <Route path='/formbuilder/:id' element={user?<FormBuilder />:<Auth/>}/>
+            <Route path="/formdisplay/:id" element={<FormDisplay />}/>
           </Routes>
         </BrowserRouter>
       </div>
